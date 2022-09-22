@@ -6,6 +6,7 @@ def plotGraph(dim,error,k_2,k_inf):
     plt.figure(figsize=(10, 4))
     plt.subplot(1, 2, 1)
     plt.plot(dim, error, '-', color='red')
+    plt.title("Relative Error")
     plt.xlabel('dimension')
     plt.ylabel('error')
     plt.grid()
@@ -13,6 +14,7 @@ def plotGraph(dim,error,k_2,k_inf):
     plt.subplot(1, 2, 2)
     plt.plot(dim, k_2, '-', color='red')
     plt.plot(dim, k_inf, '-', color='blue')
+    plt.title("k_inf and k_2")
     plt.xlabel('dimension')
     plt.ylabel('k')
     plt.grid()
@@ -24,7 +26,8 @@ def k_analisys(A):
       k_inf=np.linalg.cond(A,np.inf)
       return (k_2,k_inf)
   
-def analysis(dim,vMtrx,N):
+def analysis(dim,vMtrx):
+    N=dim.size
     r_err=np.zeros(N)
     k_2=np.zeros(N)
     k_inf=np.zeros(N)
@@ -51,14 +54,14 @@ def vecMatricx(dim,var="rand"):
             listofv.append(A)    
     else:
         for i in range(dim.size):
-            A=np.random.rand(dim[i],dim[i])
+            A=scp.linalg.hilbert(dim[i])
             listofv.append(A)
     return listofv
 
  
 dim1=np.linspace(10,100,10,dtype=int)
-analysis(dim1,vecMatricx(dim1,"Vand"),10)
+analysis(dim1,vecMatricx(dim1,"rand"))
 dim2=np.linspace(5,30,6,dtype=int)
-analysis(dim2,vecMatricx(dim2,"Vand"),6)
+analysis(dim2,vecMatricx(dim2,"Vand"))
 dim3=np.linspace(4,12,8,dtype=int)
-analysis(dim3,vecMatricx(dim3,"Hilbert"),8)
+analysis(dim3,vecMatricx(dim3,"Hilbert"))
